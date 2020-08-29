@@ -8,6 +8,7 @@ The dataset can be downloaded from one’s personal account at https://www.fitbi
 
 ## Setup & Run
 ` bash run.sh $1 $2  `
+
 Where $1 is the name of the person's data (Full name as downloaded) and $2 is the data path
 
 ## Sample Results
