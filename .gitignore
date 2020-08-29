@@ -1,9 +1,5 @@
-combined_csv_files_Christina_final_df.csv
-
-combined_csv_files_Irene_final_df.csv
-
-combined_csv_files_Kyriacos_final_df.csv
-
-plots_Loukia/
+df_csv_LoukiaConstantinou/
+df_csv_KyriacosXanthos/
+plots_KyriacosXanthos/
 
 .DS_Store

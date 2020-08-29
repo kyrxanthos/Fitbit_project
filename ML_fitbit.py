@@ -31,7 +31,7 @@ def parse_args():
     parser.add_argument("--datapath", type=str, help="Input data path (dataframe_csv)", default= os.getcwd())
     parser.add_argument("--train", type=str, help="choose between steps and calories", choices= ["steps", "calories"], default= "calories")
     parser.add_argument("--name", type=str, default="Loukia", 
-    help="person to import data from", choices=["Loukia", "Kyriacos", "Irene", "Christina"])
+    help="person to import data from")
     args = parser.parse_args()
     return args
 
@@ -42,7 +42,8 @@ if not os.path.isdir("plots_{}".format(args.name)):
 
 path = 'plots_{}'.format(args.name)
 #read relevant csv
-new_df = pd.read_csv('combined_csv_files_{}_final_df.csv'.format(args.name), header = 0)
+new_df = pd.read_csv('df_csv_{}/combined_csv_files_{}_final_df.csv'.format(args.name, args.name), header = 0)
+
 
 #convert dateTime column type to datetime
 new_df['dateTime'] = pd.to_datetime(new_df['dateTime'])
@@ -295,11 +296,11 @@ fig.savefig('{}/vis_feat_2_{}.png'.format(path, args.train), dpi=400) #save the 
 #pull out one tree from the forest (tree number 5)
 tree = rf.estimators_[5]
 #export the image to a dot file
-export_graphviz(tree, out_file = 'tree.dot', feature_names = X.columns, rounded = True, precision = 1)
+export_graphviz(tree, out_file = '{}/tree.dot'.format(path), feature_names = X.columns, rounded = True, precision = 1)
 #use dot file to create a graph
-(graph, ) = pydot.graph_from_dot_file('tree.dot')
+(graph, ) = pydot.graph_from_dot_file('{}/tree.dot'.format(path))
 #write the graph to a png file
-graph.write_png('tree.png')
+graph.write_png('{}/tree.png'.format(path))
 
 #Logistic Regression
 #print shape of dataframes
@@ -389,4 +390,4 @@ print(df.head(25))
 
 #print the coefficients along with statistical details regarding the coefficients (e.g. how effective they are in predicting the target value)
 print(stats.summary(regr, x_train, y_train, x_train.columns))
-#print('THE END')
+print('THE END')

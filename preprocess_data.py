@@ -11,8 +11,8 @@ def parse_args():
     #define parser
     parser = argparse.ArgumentParser() 
     parser.add_argument("--datapath", type=str, help="Input data path", required=True)
-    parser.add_argument("--name", type=str, default="Loukia", 
-    help="person to import data from", choices=["Loukia", "Kyriacos", "Irene", "Christina"])
+    parser.add_argument("--name", type=str, default="KyriacosXanthos", 
+    help="person to import data from")
     args = parser.parse_args()
     return args
 
@@ -20,15 +20,16 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
     folderpath = args.datapath
-    if args.name == 'Loukia':
-        folderpath = r"{}/LoukiaConstantinou/user-site-export".format(folderpath)
-    elif args.name == 'Kyriacos':
-        folderpath = r"{}/KyriacosXanthos/user-site-export".format(folderpath)
-    elif args.name == 'Irene':
-        folderpath = r"{}/IreneConstantinou/user-site-export".format(folderpath)   
-    elif args.name == 'Christina':
-        folderpath = r"{}/Christina/user-site-export".format(folderpath) 
+    # if args.name == 'Loukia':
+    #     folderpath = r"{}/LoukiaConstantinou/user-site-export".format(folderpath)
+    # elif args.name == 'Kyriacos':
+    #     folderpath = r"{}/KyriacosXanthos/user-site-export".format(folderpath)
+    # elif args.name == 'Irene':
+    #     folderpath = r"{}/IreneConstantinou/user-site-export".format(folderpath)   
+    # elif args.name == 'Christina':
+    #     folderpath = r"{}/Christina/user-site-export".format(folderpath) 
 
+    folderpath = r"{}/{}/user-site-export".format(folderpath, args.name)
 
     if not os.path.isdir("excel_files_{}".format(args.name)):
         os.makedirs("excel_files_{}".format(args.name))

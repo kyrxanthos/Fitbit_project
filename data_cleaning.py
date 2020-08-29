@@ -10,18 +10,19 @@ def parse_args():
     import argparse
     #define parser
     parser = argparse.ArgumentParser()
-    parser.add_argument("--datapath", type=str, help="Input data path (combined_csv_files)", required=True)
+    parser.add_argument("--datapath", type=str, help="Input data path", default= '')
     parser.add_argument("--name", type=str, default="Loukia", 
-    help="person to import data from", choices=["Loukia", "Kyriacos", "Irene", "Christina"])
+    help="person to import data from")
     args = parser.parse_args()
     return args
 
 args = parse_args()
 #get path
-path = '{}/combined_csv_files_{}'.format(args.datapath, args.name)
+path = 'combined_csv_files_{}'.format(args.name)
+
 
 #read sleep_score csv file
-sleep_score = pd.read_csv('{}/sleep_score.csv'.format(path))
+sleep_score = pd.read_csv("{}/{}/sleep-score/sleep_score.csv".format(args.datapath, args.name))
 
 #read file function
 def read_file(name):
@@ -96,7 +97,7 @@ resting_heart_rate = to_dt(resting_heart_rate)
 #change name of timestamp column to dateTime and to datetime type
 sleep_score['dateTime'] = pd.to_datetime(sleep_score['timestamp'])
 #remove time from dateTime column
-sleep_score['dateTime'] = sleep_score['dateTime'].dt.
+sleep_score['dateTime'] = sleep_score['dateTime'].dt.date
 #remove timestamp column
 sleep_score = sleep_score.drop(['timestamp'], axis = 1)
 #change type of dateTime columns to datetime
@@ -152,8 +153,11 @@ final_df = reduce(lambda  left,right: pd.merge(left,right,on=['dateTime'],
 #remove rows that have at least one na value in them
 new_df = final_df.dropna()
 
+if not os.path.isdir("df_csv_{}".format(args.name)):
+    os.makedirs("df_csv_{}".format(args.name))
+
 #save the new dataframe as a csv
-new_df.to_csv(r"/{}_final_df.csv".format(path), index = False)
+new_df.to_csv(r"df_csv_{}/{}_final_df.csv".format(args.name, path), index = False)
 
 
 

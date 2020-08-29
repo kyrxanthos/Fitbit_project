@@ -13,7 +13,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--datapath", type=str, help="Input data path (dataframe_csv)", default= os.getcwd())
     parser.add_argument("--name", type=str, default="Loukia", 
-    help="person to import data from", choices=["Loukia", "Kyriacos", "Irene", "Christina"])
+    help="person to import data from")
     args = parser.parse_args()
     return args
 
@@ -23,7 +23,8 @@ if not os.path.isdir("plots_{}".format(args.name)):
     os.makedirs("plots_{}".format(args.name))
 
 path = 'plots_{}'.format(args.name)
-new_df = pd.read_csv('combined_csv_files_{}_final_df.csv'.format(args.name), header = 0)
+new_df = pd.read_csv('df_csv_{}/combined_csv_files_{}_final_df.csv'.format(args.name, args.name), header = 0)
+
 
 #convert dateTime column to datetime type
 new_df['dateTime'] = pd.to_datetime(new_df['dateTime'])
